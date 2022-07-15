@@ -1,0 +1,28 @@
+---
+- hosts: all
+  tasks:
+    - name: Define config dir
+      set_fact:
+        cfgnvim: "{{ ansible_env.HOME }}/.config/nvim"
+    - name: Create config dir
+      file:
+        path: "{{ cfgnvim }}"
+        state: directory
+    - name: Define local git dir
+      set_fact:
+        localgit: "{{ ansible_env.HOME }}/git/NvChad"
+    - name: Create git dir
+      file:
+        path: "{{ localgit }}"
+        state: directory
+    - name: Clone NvChad repo
+      git: 
+        repo: https://github.com/NvChad/NvChad.git
+        dest: "{{ localgit }}"
+    - name: Copy NvChad config to .config/nvim
+      copy: src: {{ item.src }} dest: {{ item.dest }}
+      with_items:
+        - { src: "{{ localgit }}/lua", dest: "{{ cfgnvim }}" }
+        - { src: "{{ localgit }}/examples", dest: "{{ cfgnvim }}" }
+        - { src: "{{ localgit }}/init.lua", dest: "{{ cfgnvim }}" }
+        - { src: "{{ localgit }}/LICENSE", dest: "{{ cfgnvim }}" }
