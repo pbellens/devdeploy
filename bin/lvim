@@ -1,0 +1,68 @@
+#!/bin/bash
+
+
+Help()
+{
+    echo "This is an ersatz for GNU stow."
+    echo
+    echo "Syntax: ${0} pattern [-h]"
+    echo "pattern:          Pattern for find to find."
+    echo "options:"
+    echo "-l, --less        Open up the file in less afterwards."
+    echo "-h, --help        Print this help."
+    echo
+}
+
+PARAMS=""
+while (( "$#" )); do
+  case "$1" in
+    -l|--less)
+      if [ -n "$2" ] && [ ${2:0:1} != "-" ]; then
+        echo "Error: Too many arguments for $1" >&2
+        exit 1
+      else
+        less=1
+        shift 1
+      fi
+      ;;
+    -h|--help)
+        Help
+        exit 0
+      ;;
+    -*|--*=) # unsupported flags
+      echo "Error: Unsupported flag $1" >&2
+      Help
+      exit 1
+      ;;
+    *) # preserve positional arguments
+      PARAMS="$PARAMS $1"
+      shift
+      ;;
+  esac
+done
+# set positional arguments in their proper place
+eval set -- "$PARAMS"
+
+if [ $# -lt 1 ]; then
+    echo "Expected at least a pattern." 1>&2 
+    exit 2
+fi
+
+pat="$1"
+
+readarray -t matches < <( find . -name "${pat}" )
+if [ ${#matches[@]} -gt 0 ]; then
+    ~/bin/nvim.appimage ${matches[0]}
+    echo ${matches[0]}
+    if [ ! -z ${less+x} ];then
+        if command -v less &> /dev/null; then
+            less ${matches[0]}
+        else
+            echo "Could not find bat" 1>&2 
+            exit 3
+        fi
+    fi
+else
+    echo "Could not find ${pat}." 1>&2
+    exit 4
+fi
