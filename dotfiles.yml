@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+    - name: Create git directory in home directory
+      file: "path={{ ansible_env.HOME }}/git state=directory"
+    - name: Clone dotfiles repo
+      git: 
+        repo: https://github.com/pbellens/dotfiles
+        dest: "{{ ansible_env.HOME }}/git/dotfiles"
