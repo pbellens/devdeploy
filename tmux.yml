@@ -1,0 +1,21 @@
+---
+- hosts: all
+  tasks:
+    - name: Define local dir
+      set_fact:
+        localbin: "{{ ansible_env.HOME }}/.local"
+    - name: Define local git dir
+      set_fact:
+        localgit: "{{ ansible_env.HOME }}/git/tmux"
+    - name: Clone tmux repo
+      git: 
+        repo: https://github.com/tmux/tmux.git
+        dest: "{{ localgit }}"
+    - name: Set up autotools
+      shell: 
+        chdir: "{{ localgit }}"
+        cmd: "./autogen.sh"
+    - name: Configure, build, install
+      shell: 
+        chdir: "{{ localgit }}"
+        cmd: "./configure --prefix={{ localbin }} && make && make install"
