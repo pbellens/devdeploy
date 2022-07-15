@@ -1,1 +1,9 @@
-afd
+---
+- hosts: all
+  tasks:
+    - name: Install required packages
+      ansible.builtin.package:
+        name:
+          - git
+          - stow
+        state: present
