@@ -20,7 +20,9 @@
         repo: https://github.com/NvChad/NvChad.git
         dest: "{{ localgit }}"
     - name: Copy NvChad config to .config/nvim
-      copy: src: {{ item.src }} dest: {{ item.dest }}
+      copy: 
+        src: "{{ item.src }}" 
+        dest: "{{ item.dest }}"
       with_items:
         - { src: "{{ localgit }}/lua", dest: "{{ cfgnvim }}" }
         - { src: "{{ localgit }}/examples", dest: "{{ cfgnvim }}" }
