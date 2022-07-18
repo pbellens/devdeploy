@@ -7,3 +7,4 @@
           - git
           - stow
         state: present
+      become: yes
