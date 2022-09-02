@@ -18,10 +18,10 @@ if [ $? -eq 0 ] && [ ${#matches[@]} -gt 0 ]; then
         casedbuildt=$( cmake_build_type ${buildt} )
 
         if [ -f "baseline.xml" ]; then
-            eclipse-cmake-build ${casedbuildt} 
+            eclipse-cmake-build ${casedbuildt} ${@:2} 
         else
             pushd ${buildd} &> /dev/null
-            cmake --build .
+            cmake --build . ${@:2}
             popd &> /dev/null
         fi
        
