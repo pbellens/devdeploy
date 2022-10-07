@@ -6,5 +6,6 @@
         name:
           - git
           - stow
+          - xclip
         state: present
       become: yes
