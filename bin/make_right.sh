@@ -54,9 +54,14 @@ pushd $path &>/dev/null
 venv=$( pipenv --venv 2>/dev/null )
 if [ $? -ne 0 ]; then
     venv=$( poetry env info | awk '/Path/ { print $2 }' )
-    if [ $? -ne 0 ]; then
-        echo "Could not determine pipenv/Poetry environment in $path" 1>&2
-        exit 3
+    if [ "${venv}" == "NA" ]; then # Could be poetry bug ()
+        venv=$( poetry env list | awk '/Path/ { print $2 }' )
+        readarray -t venvs < <( poetry env list )
+        if [ ${#venvs[@]} -eq 0 ] || [ ${#venvs[@]} -gt 1 ]; then
+            echo "Could not determine pipenv/Poetry environment in $path" 1>&2
+            exit 3
+        fi
+        venv="$HOME/.cache/pypoetry/virtualenvs/${venvs[0]}"
     fi
 fi
 
