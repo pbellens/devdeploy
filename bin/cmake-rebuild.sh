@@ -19,15 +19,13 @@ if [ $? -eq 0 ] && [ ${#matches[@]} -gt 0 ]; then
 
         if [ -f "baseline.xml" ]; then
             eclipse-cmake-build ${casedbuildt} ${@:2}
-            ret=$?
         else
             pushd ${buildd} &> /dev/null
             cmake --build . ${@:2}
-            ret=$?
             popd &> /dev/null
         fi
        
-        if [ ! -e "${rootd}/compile_commands.json" ] && [ $? -eq 0 ]; then
+        if [ ! -e "${rootd}/compile_commands.json" ]; then
             ccjson.sh ${rootd}
         fi
     else
