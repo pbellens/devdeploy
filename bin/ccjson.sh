@@ -2,7 +2,7 @@
 
 rootd="$( readlink -f $1 )"
 if [ ! -d "${rootd}" ]; then
-    echo "Could not access directory ${rootd}." 1&>2
+    echo "Could not access directory ${rootd}." 1>&2
     exit 2
 fi
 
