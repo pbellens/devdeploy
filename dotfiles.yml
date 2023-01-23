@@ -7,3 +7,7 @@
       git: 
         repo: https://github.com/pbellens/dotfiles
         dest: "{{ ansible_env.HOME }}/git/dotfiles"
+            - name: Clone dotfiles repo
+    -name: Update font cache  
+     ansible.builtin.command: 
+        cmd: fc-cache -rv
