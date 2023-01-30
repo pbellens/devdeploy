@@ -7,5 +7,6 @@
           - git
           - stow
           - xclip
+          - ripgrep
         state: present
       become: yes
