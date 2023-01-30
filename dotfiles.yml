@@ -7,6 +7,9 @@
       git: 
         repo: https://github.com/pbellens/dotfiles
         dest: "{{ ansible_env.HOME }}/git/dotfiles"
+    - name: Create softlinks  
+      ansible.builtin.command: 
+        cmd: stow -t "{{ ansible_env.HOME }}" -d "{{ ansible_env.HOME }}/git/dotfiles}}"
     -name: Update font cache  
      ansible.builtin.command: 
         cmd: fc-cache -rv
