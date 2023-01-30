@@ -1,6 +1,14 @@
 ---
 - hosts: all
   tasks:
+    - name: Clean up existing install
+      file:
+        path: "{{ items }}"
+        state: absent
+      with_items:
+        - "{{ ansible_env.HOME }}/.config/nvim"
+        - "{{ ansible_env.HOME }}/.local/share/nvim"
+        - "{{ ansible_env.HOME }}/.cache/nvim"
     - name: Define config dir
       set_fact:
         cfgnvim: "{{ ansible_env.HOME }}/.config/nvim"
