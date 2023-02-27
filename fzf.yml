@@ -1,0 +1,15 @@
+---
+- hosts: all
+  tasks:
+    - name: Define local fzf dir
+      set_fact:
+        localfzf: "{{ ansible_env.HOME }}/.fzf"
+    - name: Clone fzf repo
+      git: 
+        repo: https://github.com/junegunn/fzf.git
+        depth: 1
+        dest: "{{ localfzf }}"
+    - name: Run install script
+      shell: 
+        chdir: "{{ localfzf }}"
+        cmd: "./install"
