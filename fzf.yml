@@ -12,4 +12,4 @@
     - name: Run install script
       shell: 
         chdir: "{{ localfzf }}"
-        cmd: "./install"
+        cmd: "./install --key-bindings --completion --update-rc"
