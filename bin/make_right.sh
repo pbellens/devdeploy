@@ -77,7 +77,7 @@ cat << EOF > pyrightconfig.json
   "reportMissingTypeStubs": false,
 
   "pythonVersion": "${ver:-3.6}",
-  "pythonPlatform": "Linux",
+  "pythonPlatform": "Linux"
 }
 EOF
 
