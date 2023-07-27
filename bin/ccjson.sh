@@ -1,6 +1,6 @@
 #/bin/bash
 
-rootd="$( readlink -f $1 )"
+rootd="$( readlink -f ${1:-$PWD} )"
 if [ ! -d "${rootd}" ]; then
     echo "Could not access directory ${rootd}." 1>&2
     exit 2
