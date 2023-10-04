@@ -16,6 +16,6 @@
       ansible.builtin.command: 
         cmd: stow -t "{{ ansible_env.HOME }}" -d "{{ ansible_env.HOME }}/git/dotfiles}}" "{{item.path}}"
       with_items: "{{ stowdir.files }}"
-    -name: Update font cache  
-     ansible.builtin.command: 
+    - name: Update font cache  
+      ansible.builtin.command: 
         cmd: fc-cache -rv
