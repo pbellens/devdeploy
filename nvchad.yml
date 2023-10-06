@@ -37,5 +37,5 @@
         - { src: "{{ localgit }}/LICENSE", dest: "{{ cfgnvim }}" }
     - name: Remove existing custom
       file:
-        path: "{{ localgit }}/lua/custom/chadrc.lua
+        path: "{{ localgit }}/lua/custom/chadrc.lua"
         state: absent
