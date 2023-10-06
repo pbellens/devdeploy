@@ -14,7 +14,7 @@
       register: stowdirs
     - name: Create softlinks  
       ansible.builtin.command: 
-        cmd: stow -t "{{ ansible_env.HOME }}" -d "{{ ansible_env.HOME }}/git/dotfiles}}" "{{item.path}}"
+        cmd: stow -t "{{ ansible_env.HOME }}" -d "{{ ansible_env.HOME }}/git/dotfiles}}" "{{ item.path | ansible.builtin.basename }}"
       with_items: "{{ stowdirs.files }}"
     - name: Update font cache  
       ansible.builtin.command: 
