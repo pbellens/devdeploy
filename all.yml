@@ -1,0 +1,28 @@
+---
+- name: global packages
+  ansible.builtin.import_tasks:
+    file: packages.yml
+
+- name: tmux
+  ansible.builtin.import_tasks:
+    file: tmux.yml
+
+- name: Node version manager
+  ansible.builtin.import_tasks:
+    file: nvm.yml
+
+- name: Neovim
+  ansible.builtin.import_tasks:
+    file: nvim.yml
+
+- name: fuzzy finder
+  ansible.builtin.import_tasks:
+    file: fzf.yml
+
+- name: NVChad
+  ansible.builtin.import_tasks:
+    file: nvchad.yml
+
+- name: dotfiles
+  ansible.builtin.import_tasks:
+    file: dotfiles.yml
