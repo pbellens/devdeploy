@@ -35,7 +35,7 @@
         - { src: "{{ localgit }}/lua", dest: "{{ cfgnvim }}" }
         - { src: "{{ localgit }}/init.lua", dest: "{{ cfgnvim }}" }
         - { src: "{{ localgit }}/LICENSE", dest: "{{ cfgnvim }}" }
-    -name: Remove existing custom
+    - name: Remove existing custom
       file:
         path: "{{ localgit }}/lua/custom/chadrc.lua
         state: absent
