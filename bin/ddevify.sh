@@ -6,7 +6,7 @@ if [ ! -f ${1} ]; then
 fi
 
 
-cat $1 | awk '/apk add/{$0=$0" neovim gcompat clang16-extra-tools git gdb"} 1' | sed '/^CMD/q' | head -n -1 > "dev.${1}"
+cat $1 | awk '/apk add/{$0=$0" neovim gcompat clang16-extra-tools git gdb ripgrep"} 1' | sed '/^CMD/q' | head -n -1 > "dev.${1}"
     
 # Set up dev stuff
 cat <<EOF >> "dev.${1}"
