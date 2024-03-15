@@ -27,6 +27,7 @@
       git: 
         repo: https://github.com/NvChad/NvChad.git
         dest: "{{ localgit }}"
+        version: "v2.0"
     - name: Copy NvChad config to .config/nvim
       copy: 
         src: "{{ item.src }}" 
