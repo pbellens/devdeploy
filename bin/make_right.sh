@@ -53,7 +53,7 @@ pushd $path &>/dev/null
 
 venv=$( pipenv --venv 2>/dev/null )
 if [ $? -ne 0 ]; then
-    venv=$( poetry env info | awk '/Path/ { print $2 }' )
+    venv=$( poetry env info | awk -v s="Virtualenv" '/^$/{ enabled=0 } $0~s{enabled=1} /Path/{ if (enabled == 1) print $2 }' )
     if [ "${venv}" == "NA" ]; then # Could be poetry bug ()
         venv=$( poetry env list | awk '/Path/ { print $2 }' )
         readarray -t venvs < <( poetry env list )
@@ -63,8 +63,9 @@ if [ $? -ne 0 ]; then
         fi
         venv="$HOME/.cache/pypoetry/virtualenvs/${venvs[0]}"
     fi
-fi
 
+    pvers=$( poetry env info | awk -v s="Base" '/^$/{ enabled=0 } $0~s{enabled=1} /Python/{ if (enabled == 1) print $2 }' )
+fi
 venvp=$( dirname $venv )
 venv=$( basename $venv )
 
@@ -76,7 +77,7 @@ cat << EOF > pyrightconfig.json
   "reportMissingImports": true,
   "reportMissingTypeStubs": false,
 
-  "pythonVersion": "${ver:-3.6}",
+  "pythonVersion": "${ver:-${pvers}}",
   "pythonPlatform": "Linux"
 }
 EOF
