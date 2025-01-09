@@ -1,0 +1,11 @@
+---
+
+- name: Install packages included in distribution
+  ansible.builtin.package:
+    name:
+      - git
+      - stow
+      - xclip
+      - ripgrep
+    state: present
+  become: yes
