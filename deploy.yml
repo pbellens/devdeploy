@@ -1,0 +1,10 @@
+- name: Set up a dev environment
+  hosts: all
+  roles:
+    - packages
+    - nvim
+    - tmux
+    - fzf
+    - marks
+    - nvm
+    - dotfiles
