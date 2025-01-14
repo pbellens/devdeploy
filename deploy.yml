@@ -1,5 +1,8 @@
 - name: Set up a dev environment
   hosts: all
+  vars_prompt:
+    - name: email
+      prompt: email account for git
   roles:
     - packages
     - nvim
