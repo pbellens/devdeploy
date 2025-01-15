@@ -1,0 +1,13 @@
+---
+
+- name: Remove existing configuration files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ ansible_env.HOME }}/.gitconfig"
+
+- name: Fill in and copy git config
+  ansible.builtin.template:
+     src: templates/gitconfig.j2
+     dest: "{{ ansible_env.HOME }}/.gitconfig"
