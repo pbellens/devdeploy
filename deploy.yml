@@ -1,10 +1,12 @@
 - name: Set up a dev environment
   hosts: all
-    vars_prompt:
+  vars_prompt:
     - name: email
       prompt: email account for git
     - name: fullname
       prompt: your full name
+  vars:
+    - neovim_version: v0.10.3
   roles:
     - packages
     - nvim
