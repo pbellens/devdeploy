@@ -8,6 +8,7 @@
   vars:
     - neovim_version: v0.10.3
     - fzf_version: v0.58.0
+    - tmux_version: 3.5a
   roles:
     - packages
     - nvim
