@@ -11,6 +11,7 @@
 - name: Clone tmux repo
   git: 
     repo: https://github.com/tmux/tmux.git
+    version: {{ tmux_version }}
     dest: "{{ localgit }}"
 
 - name: Set up autotools
