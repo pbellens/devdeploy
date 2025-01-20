@@ -8,6 +8,7 @@
   git: 
     repo: https://github.com/junegunn/fzf.git
     depth: 1
+    version: {{ fzf_version }}
     dest: "{{ localfzf }}"
 
 - name: Run install script
