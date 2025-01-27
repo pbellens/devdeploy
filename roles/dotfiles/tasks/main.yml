@@ -6,6 +6,7 @@
     state: absent
   with_items:
     - "{{ ansible_env.HOME }}/.config/xfce4/terminal/terminalrc"
+    - "{{ ansible_env.HOME }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
     - "{{ ansible_env.HOME }}/.config/nvim"
     - "{{ ansible_env.HOME }}/.local/share/nvim"
     - "{{ ansible_env.HOME }}/.local/state/nvim"
