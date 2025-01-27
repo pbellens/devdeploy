@@ -3,8 +3,10 @@
   vars_prompt:
     - name: email
       prompt: email account for git
+      private: false
     - name: fullname
       prompt: your full name
+      private: false
   vars:
     - neovim_version: v0.10.3
     - fzf_version: v0.58.0
