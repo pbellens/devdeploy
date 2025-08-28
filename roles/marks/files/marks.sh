@@ -1,10 +1,17 @@
 # https://jeroenjanssens.com/navigate/
 
 export MARKPATH=$HOME/.marks
-function jump { 
-    cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
+function j { 
+    cd -P "$MARKPATH/$1" 2>/dev/null
+    if [ $? -eq 0 ]; then 
+        if [ ! -z ${TMUX+x} ]; then
+            tmux rename-window -t${TMUX_PANE} "$1"
+        fi
+    else
+         echo "No such mark: $1"
+    fi
 }
-function mark { 
+function m { 
     mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"
 }
 function unmark { 
