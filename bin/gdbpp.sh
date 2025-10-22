@@ -2,13 +2,12 @@
 
 Help()
 {
-    echo "Create gdbinit."
+    echo "Set up pretty printers for GDB."
     echo
     echo "Syntax: $( basename ${0} ) version [-h]"
     echo "version           version of libstdcxx."
     echo "options:"
     echo "-h, --help        Print this help."
-    echo "-v, --version     GCC versionPython version."
     echo
 }
 
@@ -51,12 +50,11 @@ version=${1}
 pdir="~/.config/gdb/printers"
 pfile="printers_v${version}.py"
 
-libstdcxx_url="https://raw.githubusercontent.com/gcc-mirror/gcc/refs/heads/releases/gcc-{version}/libstdc%2B%2B-v3/python/libstdcxx/v6/printers.py"
+libstdcxx_url="https://raw.githubusercontent.com/gcc-mirror/gcc/refs/heads/releases/gcc-${version}/libstdc%2B%2B-v3/python/libstdcxx/v6/printers.py"
 #libcpp_url="https://raw.githubusercontent.com/llvm/llvm-project/{url_middle}/libcxx/utils/gdb/libcxx/printers.py"
 
 mkdir -p ${pdir}
 wget -O "${pdir}/${pfile}" ${libstdcxx_url} 
-
 
 cat <<EOM
 python 
@@ -64,4 +62,5 @@ import sys
 sys.path.insert(0, '${pdir}')
 from ${pfile} import register_libstdcxx_printers
 register_libstdcxx_printers(None)
+end
 EOM
