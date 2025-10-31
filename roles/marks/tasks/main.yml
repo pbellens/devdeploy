@@ -15,6 +15,5 @@
 - name: Update bashrc
   ansible.builtin.blockinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
-    prepend_newline: true
     block: |
       . "{{ ansible_env.HOME }}/.config/marks/marks.sh"
