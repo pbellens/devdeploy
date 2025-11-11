@@ -47,7 +47,8 @@ if [ $# -lt 1 ]; then
     exit 2
 fi
 version=${1}
-pdir="~/.config/gdb/printers"
+cdir="${HOME}/.config/gdb"
+pdir="${cdir}/printers"
 pmod="printers_v${version}"
 pfile="${pmod}.py"
 ppath="${pdir}/${pfile}"
@@ -66,6 +67,15 @@ if [ ! -f "${ppath}" ]; then
         echo "Could not fetch ${libstdcxx_url}." 1>&2
         exit 3
     fi
+fi
+
+gdbf="${cdir}/gdbinit"
+if [ ! -f "${gdbf}" ]; then 
+    echo "Created ${gdbf} with safe path." 1>&2
+    echo 'set auto-load safe-path /' > ${gdbf}
+elif [ -z "$(grep 'set auto-load safe-path' ${gdbf})" ]; then
+    echo "Adding safe path to ${gdbf}." 1>&2
+    echo 'set auto-load safe-path /' >> ${gdbf}
 fi
 
 cat <<EOM
