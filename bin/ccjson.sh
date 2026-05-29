@@ -18,9 +18,10 @@ if [ $? -eq 0 ] && [ ${#matches[@]} -gt 0 ]; then
 
     pushd $buildd &> /dev/null
     cmake .. -DCMAKE_BUILD_TYPE=${casedbuildt} -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    strip_compiler_wrappers.sh compile_commands.json > compile_commands_clean.json
     popd &> /dev/null
     rm -f compile_commands.json &> /dev/null
-    ln -s ${buildd}/compile_commands.json compile_commands.json
+    ln -s ${buildd}/compile_commands_clean.json compile_commands.json
 else
     echo "Could not find build directory." 1>&2
     exit 3
