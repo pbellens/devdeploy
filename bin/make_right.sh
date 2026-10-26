@@ -51,23 +51,19 @@ fi
 path=$( readlink -f $1 )
 pushd $path &>/dev/null
 
-venv=$( pipenv --venv 2>/dev/null )
-if [ $? -ne 0 ]; then
-    venv=$( poetry env info | awk -v s="Virtualenv" '/^$/{ enabled=0 } $0~s{enabled=1} /Path/{ if (enabled == 1) print $2 }' )
-    if [ "${venv}" == "NA" ]; then # Could be poetry bug ()
-        venv=$( poetry env list | awk '/Path/ { print $2 }' )
-        readarray -t venvs < <( poetry env list )
-        if [ ${#venvs[@]} -eq 0 ] || [ ${#venvs[@]} -gt 1 ]; then
-            echo "Could not determine pipenv/Poetry environment in $path" 1>&2
-            exit 3
-        fi
-        venv="$HOME/.cache/pypoetry/virtualenvs/${venvs[0]}"
-    fi
-
-    pvers=$( poetry env info | awk -v s="Base" '/^$/{ enabled=0 } $0~s{enabled=1} /Python/{ if (enabled == 1) print $2 }' )
+# Discover an existing uv or Poetry environment without creating or syncing one.
+if ! python_path=$( uv python find 2>/dev/null ) ||
+    ! venv=$( "$python_path" -c 'import sys; sys.exit(1) if sys.prefix == sys.base_prefix else print(sys.prefix)' 2>/dev/null ); then
+    python_path=$( poetry env info --executable 2>/dev/null ) &&
+        venv=$( "$python_path" -c 'import sys; sys.exit(1) if sys.prefix == sys.base_prefix else print(sys.prefix)' 2>/dev/null ) || venv=""
 fi
-venvp=$( dirname $venv )
-venv=$( basename $venv )
+if [ -z "$venv" ] || [ ! -d "$venv" ]; then
+    echo "Could not determine uv/Poetry environment in $path" 1>&2
+    exit 3
+fi
+pvers=$( "$python_path" -c 'import platform; print(platform.python_version())' )
+venvp=$( dirname "$venv" )
+venv=$( basename "$venv" )
 
 cat << EOF > pyrightconfig.json
 {
@@ -81,7 +77,5 @@ cat << EOF > pyrightconfig.json
   "pythonPlatform": "Linux"
 }
 EOF
-
-popd &>/dev/null
 
 echo "Created ${path}/pyrightconfig.json"
